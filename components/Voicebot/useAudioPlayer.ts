@@ -265,6 +265,8 @@ const useAudioPlayer = (onClose: () => void, onResponse: (type: string, content:
 
     // ▼ 追加: 再生ミュート用
     const isPlaybackMutedRef = useRef<boolean>(false);
+    // ▼ 追加: AI音声再生中フラグ
+    const isAiSpeakingRef = useRef<boolean>(false);
 
     const start = async () => {
         let micStream;
@@ -299,7 +301,8 @@ const useAudioPlayer = (onClose: () => void, onResponse: (type: string, content:
         processor.connect(newAudioContext.destination);
 
         processor.onaudioprocess = function (e: AudioProcessingEvent) {
-            if (isMutedRef.current) return; // マイクがミュートなら送信しない
+            // マイクがミュート、またはAI音声再生中なら送信しない
+            if (isMutedRef.current || isAiSpeakingRef.current) return;
             const inputData = e.inputBuffer.getChannelData(0);
             const outputData = new Int16Array(inputData.length);
             for (let i = 0; i < inputData.length; i++) {
@@ -386,12 +389,18 @@ const useAudioPlayer = (onClose: () => void, onResponse: (type: string, content:
         const reader = new FileReader();
         reader.onload = function () {
             if (reader.result instanceof ArrayBuffer && wavStreamPlayerRef.current) {
+                // AI音声が始まったらマイク入力を停止
+                isAiSpeakingRef.current = true;
+
                 wavStreamPlayerRef.current.add16BitPCM(reader.result, trackId);
 
                 if (speakingStopTimeoutRef.current) {
                     clearTimeout(speakingStopTimeoutRef.current);
                 }
                 speakingStopTimeoutRef.current = setTimeout(() => {
+                    // AI音声が終わったらマイク入力を再開
+                    isAiSpeakingRef.current = false;
+
                     if (websocketRef.current && websocketRef.current.readyState === WebSocket.OPEN) {
                         websocketRef.current.send(JSON.stringify({ event: "mark", payload: { mark: "ai_speak_stop" } }));
                     } else {
@@ -409,6 +418,8 @@ const useAudioPlayer = (onClose: () => void, onResponse: (type: string, content:
 
     const _stopAudio = () => {
         wavStreamPlayerRef.current?.interrupt();
+        // AI音声を停止するので、マイク入力を再開
+        isAiSpeakingRef.current = false;
         if (speakingStopTimeoutRef.current) {
             clearTimeout(speakingStopTimeoutRef.current);
             speakingStopTimeoutRef.current = null;
