@@ -22,9 +22,9 @@ export default function VoicebotPage() {
     const [isAvatarActive, setIsAvatarActive] = useState(false);
 
     const calendarEvents: CalendarEvent[] = [
-        { time: "9:30", title: "Client Meeting (Active Co.)" },
+        { time: "9:30", title: "Client Meeting (Company A)" },
         { time: "11:00", title: "Internal Progress Sharing" },
-        { time: "13:00", title: "New Proposal Meeting (Next Co.)" },
+        { time: "13:00", title: "New Proposal Meeting (Company B)" },
         { time: "16:00", title: "Internal 1on1" },
     ];
 
@@ -152,8 +152,8 @@ export default function VoicebotPage() {
                     <button
                         onClick={handleCheckInOut}
                         className={`px-16 py-8 rounded-2xl text-3xl font-bold shadow-2xl transition-all duration-300 ${isCheckIn
-                                ? 'bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white'
-                                : 'bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white'
+                            ? 'bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white'
+                            : 'bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white'
                             }`}
                     >
                         {isCheckIn ? 'Check In' : 'Check Out'}
