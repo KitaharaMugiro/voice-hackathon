@@ -1,5 +1,7 @@
 import { generateAIContentWithJsonMode } from "@/lib/Gemini";
 import { ResponseSchema, SchemaType } from "@google/generative-ai";
+import fs from 'fs/promises';
+import path from 'path';
 
 
 
@@ -39,6 +41,10 @@ export async function POST(request: Request) {
 
     const response_json = await generateAIContentWithJsonMode(prompt, responseSchema);
 
+    // データを保存する配列
+    const records = [];
+    const timestamp = new Date().toISOString();
+    const dateJST = new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' });
 
     // カテゴリに基づいて処理を分岐
     for (const category of response_json.categories) {
@@ -50,6 +56,17 @@ export async function POST(request: Request) {
 
       //スプレッドシートに書き込む
       // await writeToSheet(a1, b1, c1, d1, e1);
+
+      // レコードを追加
+      records.push({
+        timestamp,
+        dateJST,
+        title: a1,
+        category: b1,
+        categoryTitle: c1,
+        details: d1,
+        actionRequired: e1
+      });
 
       switch (category.type) {
         case "今日の良かったこと":
@@ -68,7 +85,25 @@ export async function POST(request: Request) {
       }
     }
 
-    return new Response(JSON.stringify({ message: 'Data written to spreadsheet' }), { status: 200 });
+    // JSONファイルに保存
+    const dataDir = path.join(process.cwd(), 'data');
+    await fs.mkdir(dataDir, { recursive: true });
+
+    const filename = `conversation_${new Date().toISOString().split('T')[0]}.json`;
+    const filepath = path.join(dataDir, filename);
+
+    let existingData = [];
+    try {
+      const fileContent = await fs.readFile(filepath, 'utf-8');
+      existingData = JSON.parse(fileContent);
+    } catch (error) {
+      // ファイルが存在しない場合は新規作成
+    }
+
+    existingData.push(...records);
+    await fs.writeFile(filepath, JSON.stringify(existingData, null, 2), 'utf-8');
+
+    return new Response(JSON.stringify({ message: 'Data saved to JSON file', filepath, records }), { status: 200 });
   } catch (error) {
     console.error('Failed to write data to spreadsheet:', error);
     return new Response(JSON.stringify({ error: 'Failed to write data to spreadsheet' }), { status: 500 });
