@@ -45,6 +45,9 @@ export default function Dashboard() {
                 // Filter out items that are already checked from the initial load
                 const filtered = data.filter((item: ConversationItem) => !item.archived && !item.checked);
                 setConversations(filtered);
+                // Store archived items separately
+                const archived = data.filter((item: ConversationItem) => item.archived);
+                setArchivedItems(archived);
             })
             .catch(err => console.error('Failed to load conversations:', err));
 
@@ -55,11 +58,22 @@ export default function Dashboard() {
     }, []);
 
     const handleToggleCheck = (item: ConversationItem) => {
-        setConversations(conversations.map(c =>
-            c.timestamp === item.timestamp && c.categoryTitle === item.categoryTitle
-                ? { ...c, checked: !c.checked }
-                : c
-        ));
+        const updatedItem = { ...item, checked: !item.checked };
+
+        if (updatedItem.checked) {
+            // チェックされた場合、archivedに設定してアーカイブに移動
+            updatedItem.archived = true;
+            setConversations(conversations.filter(c =>
+                !(c.timestamp === item.timestamp && c.categoryTitle === item.categoryTitle)
+            ));
+            setArchivedItems([...archivedItems, updatedItem]);
+        } else {
+            setConversations(conversations.map(c =>
+                c.timestamp === item.timestamp && c.categoryTitle === item.categoryTitle
+                    ? updatedItem
+                    : c
+            ));
+        }
     };
 
     const blockers = conversations.filter(c => c.category === "Today's Challenges" && c.categoryTitle && c.details);

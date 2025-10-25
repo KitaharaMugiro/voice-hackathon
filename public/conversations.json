@@ -80,111 +80,21 @@
     "checked": false
   },
   {
-    "timestamp": "2025-10-25T06:21:19.376Z",
-    "dateJST": "2025/10/25 15:21:19",
-    "title": "会社Bとの会議戦略調整",
+    "timestamp": "2025-10-25T07:06:02.556Z",
+    "dateJST": "2025/10/25 16:06:02",
+    "title": "価格提示の順序調整",
     "category": "Today's Challenges",
-    "categoryTitle": "Previous Price Dispute with Company B",
-    "details": "In the previous meeting with Company B, there was a disagreement regarding pricing, which needs to be considered for the upcoming meeting.",
+    "categoryTitle": "Friction from price-first sales approach",
+    "details": "Last time, starting with the price point caused some friction when initiating sales discussions.",
     "actionRequired": true
   },
   {
-    "timestamp": "2025-10-25T06:21:19.376Z",
-    "dateJST": "2025/10/25 15:21:19",
-    "title": "会社Bとの会議戦略調整",
+    "timestamp": "2025-10-25T07:06:02.556Z",
+    "dateJST": "2025/10/25 16:06:02",
+    "title": "価格提示の順序調整",
     "category": "Things to Discuss",
-    "categoryTitle": "Company B Meeting Strategy and Approach",
-    "details": "The primary discussion is to formulate a strategy for the upcoming meeting with Company B. The proposed strategy involves presenting results first, followed by price negotiations, to address previous issues and align with the user's overall goals (interpreted as 'All my dreams'). The assistant is seeking confirmation on this approach and any additional points.",
-    "actionRequired": true
-  },
-  {
-    "timestamp": "2025-10-25T06:27:48.887Z",
-    "dateJST": "2025/10/25 15:27:48",
-    "title": "商談の価格交渉戦略",
-    "category": "Today's Challenges",
-    "categoryTitle": "Friction from previous meeting with company A",
-    "details": "Starting with the price point caused some friction in the last meeting with company A, leading to a desire to change the approach for the current meeting.",
-    "actionRequired": true
-  },
-  {
-    "timestamp": "2025-10-25T06:27:48.887Z",
-    "dateJST": "2025/10/25 15:27:48",
-    "title": "商談の価格交渉戦略",
-    "category": "Things to Discuss",
-    "categoryTitle": "Strategy for second meeting with company A",
-    "details": "Discussion on a revised strategy for the second meeting with company A, specifically proposing 'results first \n then price' to avoid previous friction. The assistant is also consulting on whether to outline key results together or if the user prefers to do it independently.",
-    "actionRequired": true
-  },
-  {
-    "timestamp": "2025-10-25T06:28:55.469Z",
-    "dateJST": "2025/10/25 15:28:55",
-    "title": "商談の進行戦略",
-    "category": "Today's Challenges",
-    "categoryTitle": "Past friction from price-first approach",
-    "details": "Last time, starting with the discussion with the price point caused some friction.",
-    "actionRequired": false
-  },
-  {
-    "timestamp": "2025-10-25T06:28:55.469Z",
-    "dateJST": "2025/10/25 15:28:55",
-    "title": "商談の進行戦略",
-    "category": "Today's Challenges",
-    "categoryTitle": "Prevented premature decision at Company A meeting",
-    "details": "The user actively prevented Company A from making a decision during today's meeting, as it was almost over, to avoid a potentially premature or unfavorable outcome.",
-    "actionRequired": false
-  },
-  {
-    "timestamp": "2025-10-25T06:28:55.469Z",
-    "dateJST": "2025/10/25 15:28:55",
-    "title": "商談の進行戦略",
-    "category": "Things to Discuss",
-    "categoryTitle": "Proposed meeting strategy: Results first, then price",
-    "details": "A new strategy is proposed for future discussions: 'results first' then 'price' to avoid past friction.",
-    "actionRequired": true
-  },
-  {
-    "timestamp": "2025-10-25T06:28:55.469Z",
-    "dateJST": "2025/10/25 15:28:55",
-    "title": "商談の進行戦略",
-    "category": "Things to Discuss",
-    "categoryTitle": "Planning presentation of results",
-    "details": "Discussion is needed on how to present the results. The options include running through the presentation or drafting the main points together.",
-    "actionRequired": true
-  },
-  {
-    "timestamp": "2025-10-25T06:33:14.574Z",
-    "dateJST": "2025/10/25 15:33:14",
-    "title": "対話の進行と課題把握",
-    "category": "Today's Wins",
-    "categoryTitle": "Starting with results paid off",
-    "details": "Starting with the results really paid off.",
-    "actionRequired": false
-  },
-  {
-    "timestamp": "2025-10-25T06:33:14.574Z",
-    "dateJST": "2025/10/25 15:33:14",
-    "title": "対話の進行と課題把握",
-    "category": "Today's Challenges",
-    "categoryTitle": "Journey caused issue",
-    "details": "The journey is caused. The assistant suggests adding it to the issue list and scheduling a 1-on-1.",
-    "actionRequired": true
-  },
-  {
-    "timestamp": "2025-10-25T06:33:14.574Z",
-    "dateJST": "2025/10/25 15:33:14",
-    "title": "対話の進行と課題把握",
-    "category": "Things to Discuss",
-    "categoryTitle": "Calling the system",
-    "details": "User suggests to probably just call the system.",
-    "actionRequired": true
-  },
-  {
-    "timestamp": "2025-10-25T06:33:53.655Z",
-    "dateJST": "2025/10/25 15:33:53",
-    "title": "報告書作成の相談",
-    "category": "Things to Discuss",
-    "categoryTitle": "Report Structure Proposal",
-    "details": "The assistant proposed a basic report structure for the user, including a title, purpose/background, specific content/results, and next steps/action items. The assistant is awaiting user confirmation and further input regarding points to emphasize or specific information to include.",
+    "categoryTitle": "New sales strategy proposal",
+    "details": "Discussing a new sales strategy: 'results first \to then price' to address previous friction. Confirmation needed to proceed.",
     "actionRequired": true
   }
 ]
