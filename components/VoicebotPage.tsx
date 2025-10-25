@@ -181,9 +181,11 @@ export default function VoicebotPage() {
                             className={`w-64 h-64 rounded-full overflow-hidden shadow-2xl transition-all duration-300 ${!isAvatarActive ? 'grayscale opacity-50' : 'grayscale-0 opacity-100'
                                 }`}
                         >
-                            <div className="w-full h-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center">
-                                <div className="text-white text-8xl">👤</div>
-                            </div>
+                            <img
+                                src="/avatar.png"
+                                alt="Avatar"
+                                className="w-full h-full object-cover"
+                            />
                         </button>
                         <div className="text-center mt-4 text-gray-700">
                             {isAvatarActive ? '通話中' : 'タップして話す'}

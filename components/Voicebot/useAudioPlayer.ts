@@ -290,7 +290,8 @@ const useAudioPlayer = (onClose: () => void, onResponse: (type: string, content:
 
         micSource.connect(destination);
         const processor = newAudioContext.createScriptProcessor(BUFFER_SIZE, 1, 1);
-        const wsProtocol = "wss://voicebot-api.langcore.org";
+        // 環境変数 NEXT_PUBLIC_WS_URL を利用
+        const wsProtocol = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:3000';
         const newWebsocket = new WebSocket(`${wsProtocol}/ws/user/${clientId}`);
         websocketRef.current = newWebsocket;
 
