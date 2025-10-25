@@ -58,22 +58,11 @@ export default function Dashboard() {
     }, []);
 
     const handleToggleCheck = (item: ConversationItem) => {
-        const updatedItem = { ...item, checked: !item.checked };
-
-        if (updatedItem.checked) {
-            // チェックされた場合、archivedに設定してアーカイブに移動
-            updatedItem.archived = true;
-            setConversations(conversations.filter(c =>
-                !(c.timestamp === item.timestamp && c.categoryTitle === item.categoryTitle)
-            ));
-            setArchivedItems([...archivedItems, updatedItem]);
-        } else {
-            setConversations(conversations.map(c =>
-                c.timestamp === item.timestamp && c.categoryTitle === item.categoryTitle
-                    ? updatedItem
-                    : c
-            ));
-        }
+        setConversations(conversations.map(c =>
+            c.timestamp === item.timestamp && c.categoryTitle === item.categoryTitle
+                ? { ...c, checked: !c.checked }
+                : c
+        ));
     };
 
     const blockers = conversations.filter(c => c.category === "Today's Challenges" && c.categoryTitle && c.details);
