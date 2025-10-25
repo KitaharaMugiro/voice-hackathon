@@ -16,16 +16,16 @@ interface CalendarEvent {
 export default function VoicebotPage() {
     const [messages, setMessages] = useState<Message[]>([]);
     const [textMessage, setTextMessage] = useState('');
-    const [isCheckIn, setIsCheckIn] = useState(true); // 出勤/退勤トグル
+    const [isCheckIn, setIsCheckIn] = useState(true); // Check-in/Check-out toggle
     const [showCalendar, setShowCalendar] = useState(false);
     const [currentTime, setCurrentTime] = useState(new Date());
     const [isAvatarActive, setIsAvatarActive] = useState(false);
 
     const calendarEvents: CalendarEvent[] = [
-        { time: "9:30", title: "クライアントMTG（株式会社アクティブ）" },
-        { time: "11:00", title: "社内進捗共有" },
-        { time: "13:00", title: "新規提案会議（株式会社ネクスト）" },
-        { time: "16:00", title: "社内1on1" },
+        { time: "9:30", title: "Client Meeting (Active Co.)" },
+        { time: "11:00", title: "Internal Progress Sharing" },
+        { time: "13:00", title: "New Proposal Meeting (Next Co.)" },
+        { time: "16:00", title: "Internal 1on1" },
     ];
 
     useEffect(() => {
@@ -48,15 +48,19 @@ export default function VoicebotPage() {
     };
 
     const onClose = () => {
-        // 通話終了後の処理は不要
+        // No post-call processing needed
     };
 
-    const { isPlaying, stop, start, interrupt, isConnected, sendTextMessage, getRecording, micPermissionError, toggleMute, togglePlaybackMute } = useAudioPlayer(onClose, onResponse, "1570fba4-f261-4557-a2c6-8f6efed82533");
+    const agentId = isCheckIn
+        ? process.env.NEXT_PUBLIC_SHUKKIN
+        : process.env.NEXT_PUBLIC_TAIKIN;
+
+    const { isPlaying, stop, start, interrupt, isConnected, sendTextMessage, getRecording, micPermissionError, toggleMute, togglePlaybackMute } = useAudioPlayer(onClose, onResponse, agentId || "");
 
     const handleCheckInOut = () => {
         if (isCheckIn) {
             setShowCalendar(true);
-            // ボイスボットを起動してミュート状態にする
+            // Start voicebot in muted state
             start();
             toggleMute();
             togglePlaybackMute();
@@ -70,14 +74,14 @@ export default function VoicebotPage() {
 
     const handleAvatarClick = () => {
         if (!isAvatarActive) {
-            // グレーアウト解除 - ミュート解除
+            // Remove grayscale - unmute
             setIsAvatarActive(true);
             if (isConnected) {
                 toggleMute();
                 togglePlaybackMute();
             }
         } else {
-            // グレーアウト - 通話終了
+            // Apply grayscale - end call
             setIsAvatarActive(false);
             if (isConnected) {
                 stop();
@@ -100,20 +104,20 @@ export default function VoicebotPage() {
         {micPermissionError && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                 <div className="bg-white p-6 rounded-lg shadow-xl">
-                    <h3 className="text-lg font-semibold mb-2">マイクの使用許可が必要です</h3>
-                    <p className="mb-4">ブラウザの設定からマイクの使用を許可してください。</p>
+                    <h3 className="text-lg font-semibold mb-2">Microphone Permission Required</h3>
+                    <p className="mb-4">Please allow microphone access in your browser settings.</p>
                     <button
                         onClick={() => window.location.reload()}
                         className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
                     >
-                        再読み込み
+                        Reload
                     </button>
                 </div>
             </div>
         )}
 
         <div className="flex flex-col h-screen p-8">
-            {/* トグルスイッチ */}
+            {/* Toggle Switch */}
             <div className="flex justify-center mb-4">
                 <div className="inline-flex items-center bg-white rounded-full p-1 shadow-sm">
                     <button
@@ -121,29 +125,29 @@ export default function VoicebotPage() {
                         className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${isCheckIn ? 'bg-blue-500 text-white' : 'text-gray-600'
                             }`}
                     >
-                        出勤
+                        Check In
                     </button>
                     <button
                         onClick={() => setIsCheckIn(false)}
                         className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${!isCheckIn ? 'bg-red-500 text-white' : 'text-gray-600'
                             }`}
                     >
-                        退勤
+                        Check Out
                     </button>
                 </div>
             </div>
 
-            {/* 日付・時間表示 */}
+            {/* Date and Time Display */}
             <div className="flex flex-col items-center mb-8">
                 <div className="text-6xl font-bold text-gray-800 mb-2">
-                    {currentTime.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' })}
+                    {currentTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
                 </div>
                 <div className="text-2xl text-gray-600">
-                    {currentTime.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' })}
+                    {currentTime.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' })}
                 </div>
             </div>
 
-            {/* 出退勤ボタン */}
+            {/* Check In/Out Button */}
             {!showCalendar && (
                 <div className="flex justify-center mb-8">
                     <button
@@ -153,17 +157,17 @@ export default function VoicebotPage() {
                                 : 'bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white'
                             }`}
                     >
-                        {isCheckIn ? '出勤' : '退勤'}
+                        {isCheckIn ? 'Check In' : 'Check Out'}
                     </button>
                 </div>
             )}
 
-            {/* カレンダーとアバター */}
+            {/* Calendar and Avatar */}
             {showCalendar && (
                 <div className="flex gap-8 justify-center items-start">
-                    {/* カレンダー */}
+                    {/* Calendar */}
                     <div className="bg-white rounded-xl shadow-lg p-6 w-96">
-                        <h3 className="text-xl font-bold mb-4 text-gray-800">今日の予定</h3>
+                        <h3 className="text-xl font-bold mb-4 text-gray-800">Today's Schedule</h3>
                         <div className="space-y-3">
                             {calendarEvents.map((event, index) => (
                                 <div key={index} className="flex items-start border-l-4 border-blue-500 pl-3 py-2">
@@ -174,7 +178,7 @@ export default function VoicebotPage() {
                         </div>
                     </div>
 
-                    {/* アバター */}
+                    {/* Avatar */}
                     <div className="flex flex-col items-center">
                         <button
                             onClick={handleAvatarClick}
@@ -188,10 +192,10 @@ export default function VoicebotPage() {
                             />
                         </button>
                         <div className="text-center mt-4 text-gray-700">
-                            {isAvatarActive ? '通話中' : 'タップして話す'}
+                            {isAvatarActive ? 'On Call' : 'Tap to Talk'}
                         </div>
 
-                        {/* テキスト入力フォーム */}
+                        {/* Text Input Form */}
                         {isAvatarActive && (
                             <div className="mt-4 w-80">
                                 <Input
@@ -199,7 +203,7 @@ export default function VoicebotPage() {
                                     value={textMessage}
                                     onChange={(e) => setTextMessage(e.target.value)}
                                     onKeyPress={handleTextSubmit}
-                                    placeholder="テキストで入力"
+                                    placeholder="Type message"
                                     className="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
                                 />
                             </div>
@@ -208,7 +212,7 @@ export default function VoicebotPage() {
                 </div>
             )}
 
-            {/* メッセージ履歴 */}
+            {/* Message History */}
             {showCalendar && (
                 <div className="flex-grow overflow-y-auto px-4 mt-8 max-w-4xl mx-auto w-full">
                     {messages.slice(-5).map((message, index) => (

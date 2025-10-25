@@ -14,11 +14,11 @@ export async function POST(request: Request) {
     }
 
     const prompt = `
-        以下の会話履歴から、「今日の良かったこと」「今日の課題」「相談したいこと」の3つのカテゴリに分けて分析してください。
-        それぞれのカテゴリに該当する内容がない場合は、そのカテゴリは空の配列で返してください。
-        複数の項目が該当する場合は、すべて抽出してください。
+        Analyze the following conversation history and categorize it into three categories: "Today's Wins", "Today's Challenges", and "Things to Discuss".
+        If there is no content for a category, return an empty array for that category.
+        If there are multiple items, extract all of them.
 
-        会話履歴:
+        Conversation history:
         ${conversation_list.map((item: any) => `${item.role}: ${item.content}`).join('\n')}
         `
     const responseSchema: ResponseSchema = {
@@ -29,10 +29,10 @@ export async function POST(request: Request) {
           items: {
             type: SchemaType.OBJECT,
             properties: {
-              type: { type: SchemaType.STRING, enum: ["今日の良かったこと", "今日の課題", "相談したいこと", "その他"] },
-              title: { type: SchemaType.STRING, description: "カテゴリに応じたタイトル。良かったことであれば成果の概要、課題であれば課題名、相談したいことであれば相談内容の概要" },
-              details: { type: SchemaType.STRING, description: "カテゴリに応じた詳細な内容。良かったことであれば具体的な成果や嬉しかったこと、課題であれば具体的な問題内容、相談したいことであれば詳細な相談内容" },
-              action: { type: SchemaType.BOOLEAN, description: "有人による対応が必要か。解決済みであればfalse, 未解決であればtrue" }
+              type: { type: SchemaType.STRING, enum: ["Today's Wins", "Today's Challenges", "Things to Discuss", "Other"] },
+              title: { type: SchemaType.STRING, description: "Title based on category. For wins: summary of achievement, for challenges: challenge name, for things to discuss: overview of consultation" },
+              details: { type: SchemaType.STRING, description: "Detailed content based on category. For wins: specific achievements or happy moments, for challenges: specific problem details, for things to discuss: detailed consultation content" },
+              action: { type: SchemaType.BOOLEAN, description: "Whether human intervention is needed. false if resolved, true if unresolved" }
             }
           }
         }
@@ -41,12 +41,12 @@ export async function POST(request: Request) {
 
     const response_json = await generateAIContentWithJsonMode(prompt, responseSchema);
 
-    // データを保存する配列
+    // Array to store data
     const records = [];
     const timestamp = new Date().toISOString();
     const dateJST = new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' });
 
-    // カテゴリに基づいて処理を分岐
+    // Process based on category
     for (const category of response_json.categories) {
       const a1 = title;
       const b1 = category.type;
@@ -54,10 +54,10 @@ export async function POST(request: Request) {
       const d1 = category.details;
       const e1 = category.action;
 
-      //スプレッドシートに書き込む
+      // Write to spreadsheet (disabled)
       // await writeToSheet(a1, b1, c1, d1, e1);
 
-      // レコードを追加
+      // Add record
       records.push({
         timestamp,
         dateJST,
@@ -69,35 +69,34 @@ export async function POST(request: Request) {
       });
 
       switch (category.type) {
-        case "今日の良かったこと":
-          console.log("良かったこと記録: ポジティブな出来事を記録しました");
+        case "Today's Wins":
+          console.log("Win recorded: Positive event logged");
           break;
 
-        case "今日の課題":
-          console.log("課題検知: 解決が必要な課題を記録しました");
+        case "Today's Challenges":
+          console.log("Challenge detected: Issue requiring resolution logged");
           break;
 
-        case "相談したいこと":
-          console.log("相談事項検知: サポートが必要な事項を記録しました");
+        case "Things to Discuss":
+          console.log("Consultation detected: Item requiring support logged");
           break;
         default:
-          console.log(`その他のカテゴリ: ${category.type}`);
+          console.log(`Other category: ${category.type}`);
       }
     }
 
-    // JSONファイルに保存
+    // Save to JSON file
     const dataDir = path.join(process.cwd(), 'data');
     await fs.mkdir(dataDir, { recursive: true });
 
-    const filename = `conversation_${new Date().toISOString().split('T')[0]}.json`;
-    const filepath = path.join(dataDir, filename);
+    const filepath = path.join(dataDir, 'conversations.json');
 
     let existingData = [];
     try {
       const fileContent = await fs.readFile(filepath, 'utf-8');
       existingData = JSON.parse(fileContent);
     } catch (error) {
-      // ファイルが存在しない場合は新規作成
+      // Create new file if it doesn't exist
     }
 
     existingData.push(...records);

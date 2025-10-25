@@ -1,0 +1,26 @@
+[
+  {
+    "id": "goal1",
+    "title": "10社の新規顧客を獲得",
+    "target": 10,
+    "current": 7,
+    "unit": "社",
+    "quarter": "Q4 2025"
+  },
+  {
+    "id": "goal2",
+    "title": "来期売上を2,000万円",
+    "target": 20000000,
+    "current": 15800000,
+    "unit": "円",
+    "quarter": "Q4 2025"
+  },
+  {
+    "id": "goal3",
+    "title": "空き時間に5冊の営業書籍を読む",
+    "target": 5,
+    "current": 0,
+    "unit": "冊",
+    "quarter": "Q4 2025"
+  }
+]
