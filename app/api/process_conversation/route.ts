@@ -1,7 +1,4 @@
 import { generateAIContentWithJsonMode } from "@/lib/Gemini";
-import { createGithubIssue } from "@/lib/Github";
-import { sendSMS } from "@/lib/SMS";
-import { writeToSheet } from "@/lib/SpreadSheet";
 import { ResponseSchema, SchemaType } from "@google/generative-ai";
 
 
@@ -52,7 +49,7 @@ export async function POST(request: Request) {
       const e1 = category.action;
 
       //スプレッドシートに書き込む
-      await writeToSheet(a1, b1, c1, d1, e1);
+      // await writeToSheet(a1, b1, c1, d1, e1);
 
       switch (category.type) {
         case "今日の良かったこと":
