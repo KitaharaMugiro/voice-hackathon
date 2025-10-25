@@ -1,10 +1,6 @@
 "use client"
-import Avatar from "@/components/Voicebot/Avatar";
 import useAudioPlayer from "@/components/Voicebot/useAudioPlayer";
 import { useState, useEffect } from "react";
-import { IoIosCall } from "react-icons/io";
-import { MdCallEnd } from "react-icons/md";
-import { BsChatDots } from "react-icons/bs";
 import { Input } from "@/components/ui/input";
 
 interface Message {
@@ -20,15 +16,10 @@ interface CalendarEvent {
 export default function VoicebotPage() {
     const [messages, setMessages] = useState<Message[]>([]);
     const [textMessage, setTextMessage] = useState('');
-    const [showResultPopup, setShowResultPopup] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-    const [isChatMode, setIsChatMode] = useState(false);
     const [isCheckIn, setIsCheckIn] = useState(true); // 出勤/退勤トグル
     const [showCalendar, setShowCalendar] = useState(false);
     const [currentTime, setCurrentTime] = useState(new Date());
     const [isAvatarActive, setIsAvatarActive] = useState(false);
-
-    const resultUrl = "https://docs.google.com/spreadsheets/d/1IjXpZXKhbsxkuo4Fo3r80HYonebVoYsamSwtWxZVGOQ/edit?gid=0#gid=0"; // 結果表示用のURL
 
     const calendarEvents: CalendarEvent[] = [
         { time: "9:30", title: "クライアントMTG（株式会社アクティブ）" },
@@ -57,14 +48,10 @@ export default function VoicebotPage() {
     };
 
     const onClose = () => {
-        setIsLoading(true);
-        setTimeout(() => {
-            setIsLoading(false);
-            setShowResultPopup(true);
-        }, 5000);
+        // 通話終了後の処理は不要
     };
 
-    const { isPlaying, stop, start, interrupt, isConnected, sendTextMessage, getRecording, micPermissionError, toggleMute, togglePlaybackMute } = useAudioPlayer(onClose, onResponse, "d007274c-07b3-4f25-9b32-2ef437ff106c");
+    const { isPlaying, stop, start, interrupt, isConnected, sendTextMessage, getRecording, micPermissionError, toggleMute, togglePlaybackMute } = useAudioPlayer(onClose, onResponse, "1570fba4-f261-4557-a2c6-8f6efed82533");
 
     const handleCheckInOut = () => {
         if (isCheckIn) {
@@ -124,38 +111,6 @@ export default function VoicebotPage() {
                 </div>
             </div>
         )}
-        {isLoading && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                <div className="bg-white p-6 rounded-lg shadow-xl">
-                    <div className="flex flex-col items-center">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mb-4"></div>
-                        <p className="text-gray-700">AIエージェントが会話を分析中...</p>
-                    </div>
-                </div>
-            </div>
-        )}
-        {showResultPopup && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                <div className="bg-white p-6 rounded-lg shadow-xl max-w-[90%] w-[400px]">
-                    <h3 className="text-lg font-semibold mb-2">通話が終了しました</h3>
-                    <p className="mb-4">結果は以下のURLで確認できます：</p>
-                    <a
-                        href={resultUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-500 hover:text-blue-700 underline break-all"
-                    >
-                        {resultUrl}
-                    </a>
-                    <button
-                        onClick={() => setShowResultPopup(false)}
-                        className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full"
-                    >
-                        閉じる
-                    </button>
-                </div>
-            </div>
-        )}
 
         <div className="flex flex-col h-screen p-8">
             {/* トグルスイッチ */}
@@ -163,17 +118,15 @@ export default function VoicebotPage() {
                 <div className="inline-flex items-center bg-white rounded-full p-1 shadow-sm">
                     <button
                         onClick={() => setIsCheckIn(true)}
-                        className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
-                            isCheckIn ? 'bg-blue-500 text-white' : 'text-gray-600'
-                        }`}
+                        className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${isCheckIn ? 'bg-blue-500 text-white' : 'text-gray-600'
+                            }`}
                     >
                         出勤
                     </button>
                     <button
                         onClick={() => setIsCheckIn(false)}
-                        className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
-                            !isCheckIn ? 'bg-red-500 text-white' : 'text-gray-600'
-                        }`}
+                        className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${!isCheckIn ? 'bg-red-500 text-white' : 'text-gray-600'
+                            }`}
                     >
                         退勤
                     </button>
@@ -195,11 +148,10 @@ export default function VoicebotPage() {
                 <div className="flex justify-center mb-8">
                     <button
                         onClick={handleCheckInOut}
-                        className={`px-16 py-8 rounded-2xl text-3xl font-bold shadow-2xl transition-all duration-300 ${
-                            isCheckIn
+                        className={`px-16 py-8 rounded-2xl text-3xl font-bold shadow-2xl transition-all duration-300 ${isCheckIn
                                 ? 'bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white'
                                 : 'bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white'
-                        }`}
+                            }`}
                     >
                         {isCheckIn ? '出勤' : '退勤'}
                     </button>
@@ -226,9 +178,8 @@ export default function VoicebotPage() {
                     <div className="flex flex-col items-center">
                         <button
                             onClick={handleAvatarClick}
-                            className={`w-64 h-64 rounded-full overflow-hidden shadow-2xl transition-all duration-300 ${
-                                !isAvatarActive ? 'grayscale opacity-50' : 'grayscale-0 opacity-100'
-                            }`}
+                            className={`w-64 h-64 rounded-full overflow-hidden shadow-2xl transition-all duration-300 ${!isAvatarActive ? 'grayscale opacity-50' : 'grayscale-0 opacity-100'
+                                }`}
                         >
                             <div className="w-full h-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center">
                                 <div className="text-white text-8xl">👤</div>
