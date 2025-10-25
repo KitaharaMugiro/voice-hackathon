@@ -1,6 +1,7 @@
 "use client"
 import { useState, useEffect } from "react";
 import { FaCheckCircle, FaCalendarAlt } from "react-icons/fa";
+import ReactMarkdown from 'react-markdown';
 
 interface ConversationItem {
     timestamp: string;
@@ -359,8 +360,8 @@ export default function Dashboard() {
                                             </div>
                                         </div>
                                     ) : analysis ? (
-                                        <div className="bg-white rounded-lg p-6 whitespace-pre-wrap">
-                                            {analysis}
+                                        <div className="bg-white rounded-lg p-6 prose prose-slate max-w-none">
+                                            <ReactMarkdown>{analysis}</ReactMarkdown>
                                         </div>
                                     ) : (
                                         <div className="bg-white rounded-lg p-6 text-gray-500 text-center">
