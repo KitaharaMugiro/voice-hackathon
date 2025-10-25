@@ -78,23 +78,5 @@
     "details": "Would like to discuss balance between existing project follow-up and new customer development. Current project closing is taking up time.",
     "actionRequired": true,
     "checked": false
-  },
-  {
-    "timestamp": "2025-10-25T07:06:02.556Z",
-    "dateJST": "2025/10/25 16:06:02",
-    "title": "価格提示の順序調整",
-    "category": "Today's Challenges",
-    "categoryTitle": "Friction from price-first sales approach",
-    "details": "Last time, starting with the price point caused some friction when initiating sales discussions.",
-    "actionRequired": true
-  },
-  {
-    "timestamp": "2025-10-25T07:06:02.556Z",
-    "dateJST": "2025/10/25 16:06:02",
-    "title": "価格提示の順序調整",
-    "category": "Things to Discuss",
-    "categoryTitle": "New sales strategy proposal",
-    "details": "Discussing a new sales strategy: 'results first \to then price' to address previous friction. Confirmation needed to proceed.",
-    "actionRequired": true
   }
 ]
