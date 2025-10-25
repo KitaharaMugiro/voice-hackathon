@@ -86,7 +86,7 @@ export async function POST(request: Request) {
     }
 
     // Save to JSON file
-    const dataDir = path.join(process.cwd(), 'data');
+    const dataDir = path.join(process.cwd(), 'public');
     await fs.mkdir(dataDir, { recursive: true });
 
     const filepath = path.join(dataDir, 'conversations.json');

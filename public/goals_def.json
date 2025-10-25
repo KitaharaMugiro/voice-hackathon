@@ -1,0 +1,26 @@
+[
+  {
+    "id": "goal1",
+    "title": "Acquire 10 new customers",
+    "target": 10,
+    "current": 7,
+    "unit": " companies",
+    "quarter": "Q4 2025"
+  },
+  {
+    "id": "goal2",
+    "title": "Achieve 20M yen in next quarter revenue",
+    "target": 2000,
+    "current": 1580,
+    "unit": "万円",
+    "quarter": "Q4 2025"
+  },
+  {
+    "id": "goal3",
+    "title": "Read 5 sales books in free time",
+    "target": 5,
+    "current": 0,
+    "unit": " books",
+    "quarter": "Q4 2025"
+  }
+]

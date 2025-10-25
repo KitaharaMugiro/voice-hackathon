@@ -58,18 +58,11 @@ export default function VoicebotPage() {
     const { isPlaying, stop, start, interrupt, isConnected, sendTextMessage, getRecording, micPermissionError, toggleMute, togglePlaybackMute } = useAudioPlayer(onClose, onResponse, agentId || "");
 
     const handleCheckInOut = () => {
-        if (isCheckIn) {
-            setShowCalendar(true);
-            // Start voicebot in muted state
-            start();
-            toggleMute();
-            togglePlaybackMute();
-        } else {
-            setShowCalendar(false);
-            if (isConnected) {
-                stop();
-            }
-        }
+        setShowCalendar(true);
+        // Start voicebot in muted state
+        start();
+        toggleMute();
+        togglePlaybackMute();
     };
 
     const handleAvatarClick = () => {
@@ -117,6 +110,12 @@ export default function VoicebotPage() {
         )}
 
         <div className="flex flex-col h-screen p-8">
+            {/* Dashboard Link */}
+            <div className="absolute top-4 right-4">
+                <a href="/dashboard" className="text-sm text-gray-600 hover:text-gray-800 underline">
+                    Dashboard
+                </a>
+            </div>
             {/* Toggle Switch */}
             <div className="flex justify-center mb-4">
                 <div className="inline-flex items-center bg-white rounded-full p-1 shadow-sm">

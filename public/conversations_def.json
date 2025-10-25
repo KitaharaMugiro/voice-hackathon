@@ -1,0 +1,82 @@
+[
+  {
+    "timestamp": "2025-10-25T01:30:00.000Z",
+    "dateJST": "2025/10/25 10:30:00",
+    "title": "Morning Check-in",
+    "category": "Today's Wins",
+    "categoryTitle": "Contract signed with Company C",
+    "details": "Successfully finalized negotiations with Company C and signed the contract. This is the result of 3 months of negotiation.",
+    "actionRequired": false,
+    "checked": true
+  },
+  {
+    "timestamp": "2025-10-25T02:15:00.000Z",
+    "dateJST": "2025/10/25 11:15:00",
+    "title": "Morning Review",
+    "category": "Today's Challenges",
+    "categoryTitle": "Company A proposal didn't resonate due to price point",
+    "details": "Submitted proposal to Company A but received feedback that it exceeds budget. They pointed out that we're 15% higher than competitors.",
+    "actionRequired": true,
+    "checked": false
+  },
+  {
+    "timestamp": "2025-10-25T03:45:00.000Z",
+    "dateJST": "2025/10/25 12:45:00",
+    "title": "Post-lunch Check",
+    "category": "Today's Challenges",
+    "categoryTitle": "Progress delayed waiting for B's work",
+    "details": "Proposal creation for Company D is stalled waiting for B's technical specification document. Need to submit today, but B is busy with other projects.",
+    "actionRequired": true,
+    "checked": false
+  },
+  {
+    "timestamp": "2025-10-25T05:20:00.000Z",
+    "dateJST": "2025/10/25 14:20:00",
+    "title": "Afternoon Consultation",
+    "category": "Things to Discuss",
+    "categoryTitle": "Adjust number of projects B is handling",
+    "details": "B is currently handling 5 projects and is clearly over capacity. Would like to consider redistributing to other members.",
+    "actionRequired": true,
+    "checked": false
+  },
+  {
+    "timestamp": "2025-10-24T01:00:00.000Z",
+    "dateJST": "2025/10/24 10:00:00",
+    "title": "Previous Day Achievement",
+    "category": "Today's Wins",
+    "categoryTitle": "New lead acquired through Company E referral",
+    "details": "Company E representative introduced us to another company, and a meeting is scheduled for next week. Referral sales are starting to show results.",
+    "actionRequired": false,
+    "checked": true
+  },
+  {
+    "timestamp": "2025-10-24T04:30:00.000Z",
+    "dateJST": "2025/10/24 13:30:00",
+    "title": "Previous Day Challenge",
+    "category": "Today's Challenges",
+    "categoryTitle": "Cannot schedule meeting with Company F decision maker",
+    "details": "Have good relationship with Company F point of contact, but haven't been able to schedule meeting with decision maker for 3 weeks.",
+    "actionRequired": true,
+    "checked": false
+  },
+  {
+    "timestamp": "2025-10-23T02:00:00.000Z",
+    "dateJST": "2025/10/23 11:00:00",
+    "title": "Two Days Ago Achievement",
+    "category": "Today's Wins",
+    "categoryTitle": "Successful first meeting with Company G",
+    "details": "First meeting with Company G showed strong interest, and technical demo is scheduled for next meeting.",
+    "actionRequired": false,
+    "checked": false
+  },
+  {
+    "timestamp": "2025-10-22T03:15:00.000Z",
+    "dateJST": "2025/10/22 12:15:00",
+    "title": "Three Days Ago Consultation",
+    "category": "Things to Discuss",
+    "categoryTitle": "Prioritization of new customer development",
+    "details": "Would like to discuss balance between existing project follow-up and new customer development. Current project closing is taking up time.",
+    "actionRequired": true,
+    "checked": false
+  }
+]
